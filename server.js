@@ -150,13 +150,15 @@ app.post('/postmark', function(req, res){
 
   var allText = req.body.Subject + " " + req.body.TextBody;
   var dates = chrono.parse(allText);
-
+  var date = "";
+  if(dates[0]) date = dates[0].startDate;
+  
   item = new RightNow({
     subject: req.body.Subject,
     date_created: new Date(),
     text: req.body.TextBody,
     from: req.body.From,
-    parsed_date: dates[0].startDate
+    parsed_date: date
     
   });
   
