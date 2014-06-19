@@ -199,8 +199,7 @@ app.post('/postmark', function(req, res){
  			
     	});
     	
-    	var words = req.body.TextBody.split(' ');
-    	var tags = words.match(/#\S+/g);
+    	var tags = req.body.TextBody.match(/#\S+/g);
     	tags.forEach(function(val, i) {
     		var txt = val.substr(1);
     		var tag = new Tag({
