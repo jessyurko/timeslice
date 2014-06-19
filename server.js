@@ -157,7 +157,7 @@ app.post('/postmark', function(req, res){
   var time = false;
   if(dates[0]) {
   	date = new Date(dates[0].startDate);
-  	if(date[0].start.hours) time = true; 
+  	if(dates[0].start.hours) time = true; 
   }
   
   item = new RightNow({
