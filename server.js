@@ -265,8 +265,10 @@ app.get('/api/keyword/:tag', function(req, res){
   var items = [];
   return Tag.find({text: req.params.tag}, function(err, tags) {
   	if(tags) {
+  		console.dir(tags);
 		tags.forEach(function(val, i) {
 	    	RightNow.findById(val.rightnow, function(err, item) {
+	    		console.dir(item);
 	    		var images = [];
 	    		Image.find({rightnow: val.rightnow}, function(err, imgs) {
 	    			imgs.forEach(function(img, j) {
@@ -274,6 +276,7 @@ app.get('/api/keyword/:tag', function(req, res){
 	    			});
 	    			
 	    			item.imgs = images;
+	    			console.dir(item);
 	    			items.push(item);
 	    		});
 	    	});
