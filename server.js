@@ -267,9 +267,9 @@ app.get('/api/keyword/:tag', function(req, res){
   	if(tags) {
 		tags.forEach(function(val, i) {
 	    	RightNow.findById(val.rightnow, function(err, item) {
-	    		items.push(item);	    		
+	    		var obj = item;
+	    		items.push(obj);	    		
 	    	});
-
 		});
 		
 		return res.send(items);
