@@ -157,7 +157,7 @@ app.post('/postmark', function(req, res){
   var time = false;
   if(dates[0]) {
   	date = new Date(dates[0].startDate);
-  	if(dates[0].start.hours) time = true; 
+  	if(dates[0].start.hour) time = true; 
   }
   
   item = new RightNow({
@@ -212,15 +212,17 @@ app.post('/postmark', function(req, res){
     	});
     	
     	var tags = req.body.TextBody.match(/#\S+/g);
-    	tags.forEach(function(val, i) {
-    		var txt = val.substr(1);
-    		var tag = new Tag({
-    			rightnow: item._id,
-    			text: txt
-    		});
-    		
-    		tage.save();
-    	});
+    	if(tags) {
+    		tags.forEach(function(val, i) {
+				var txt = val.substr(1);
+				var tag = new Tag({
+					rightnow: item._id,
+					text: txt
+				});
+			
+				tage.save();
+			});
+		}
     	
       return console.log("created");
     }
