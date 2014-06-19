@@ -95,13 +95,13 @@ app.get('/view', function(req, res){
 });
 
 app.get('/api/items', function(req, res){
-  return Event.find(function(err, events) {
+  return RightNow.find(function(err, events) {
     return res.send(events);
   });
 });
 
 app.get('/api/items/:id', function(req, res){
-  return Event.findById(req.params.id, function(err, event) {
+  return RightNow.findById(req.params.id, function(err, event) {
     if (!err) {
       return res.send(event);
     }
@@ -109,7 +109,7 @@ app.get('/api/items/:id', function(req, res){
 });
 
 app.put('/api/items/:id', function(req, res){
-  return Event.findById(req.params.id, function(err, event) {
+  return RightNow.findById(req.params.id, function(err, event) {
     event.title = req.body.title;
     event.date = req.body.date;
     event.time = req.body.time;
@@ -127,7 +127,7 @@ app.put('/api/items/:id', function(req, res){
 
 
 app.delete('/api/items/:id', function(req, res){
-  return Event.findById(req.params.id, function(err, event) {
+  return RightNow.findById(req.params.id, function(err, event) {
     return event.remove(function(err) {
       if (!err) {
         console.log("removed");
@@ -138,11 +138,7 @@ app.delete('/api/items/:id', function(req, res){
 });
 
 
-app.get('/postmark', function(req, res){
-	var date = chrono.parse("jan 12th 2pm");
-	
-	return res.send(date);
-});
+
 
 app.post('/postmark', function(req, res){
   var item;
