@@ -66,7 +66,9 @@ var RightNow = mongoose.model('RightNow', new mongoose.Schema({
 	subject: String,
 	text: String,
 	parsed_date: Date,
-	time: Boolean
+	time: Boolean,
+	tags: Array,
+	images: Array
 }));
 
 var Image = mongoose.model('Image', new mongoose.Schema({
@@ -166,7 +168,7 @@ app.post('/postmark', function(req, res){
     text: req.body.TextBody,
     from: req.body.From,
     parsed_date: date,
-    time: time
+    time: time,
     
   });
   
@@ -213,12 +215,16 @@ app.post('/postmark', function(req, res){
     	
     	var tags = req.body.TextBody.match(/#\S+/g);
     	if(tags) {
+    		item.tags = [];
+    		
     		tags.forEach(function(val, i) {
 				var txt = val.substr(1);
 				var tag = new Tag({
 					rightnow: item._id,
 					text: txt
 				});
+				
+				item.tags.push(txt);
 			
 				tag.save();
 			});
