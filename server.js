@@ -261,9 +261,29 @@ var s3 = new AWS.S3();
 
 });
 
-app.get('/api/cat/:category', function(req, res){
-  return RightNow.find({category: req.params.category}, function(err, items) {
-    return res.send(items);
+app.get('/api/keyword/:tag', function(req, res){
+  var items = [];
+  return Tag.find({text: req.params.tag}, function(err, tags) {
+  	if(tags) {
+		tags.forEach(function(val, i) {
+	    	RightNow.findById(val.rightnow, function(err, item) {
+	    		var images = [];
+	    		Image.find({rightnow: val.rightnow}, function(err, imgs) {
+	    			imgs.forEach(function(img, j) {
+	    				images.push(img.imgurl);
+	    			});
+	    			
+	    			item.imgs = images;
+	    			items.push(item);
+	    		});
+	    	});
+	    	
+	    	
+	    	
+	    	return res.send(items);
+
+		});
+	} else return res.send('none found');
   });
 });
 
