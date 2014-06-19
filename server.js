@@ -278,12 +278,11 @@ app.get('/api/keyword/:tag', function(req, res){
 	    			items.push(item);
 	    		});
 	    	});
-	    	
-	    	
-	    	
-	    	return res.send(items);
 
 		});
+		
+		return res.send(items);
+
 	} else return res.send('none found');
   });
 });
