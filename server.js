@@ -273,6 +273,13 @@ app.get('/api/imgs', function(req, res){
   });
 });
 
+app.get('/api/tags', function(req, res){
+  return Tag.find(function(err, items) {
+    return res.send(items);
+  });
+});
+
+
 
 var theport = process.env.PORT || 5000;
 http.createServer(app).listen(theport, function () {
