@@ -138,11 +138,7 @@ app.delete('/api/items/:id', function(req, res){
 });
 
 
-app.get('/api/test/:date', function(req, res){
-	var date = chrono.parse("jan 12th 2pm");
-	
-	return res.send(date);
-});
+
 
 app.post('/postmark', function(req, res){
   var item;
