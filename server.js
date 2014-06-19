@@ -267,15 +267,14 @@ app.get('/api/keyword/:tag', function(req, res){
   	if(tags) {
 		tags.forEach(function(val, i) {
 	    	RightNow.findById(val.rightnow, function(err, item) {
+	    		items.push(item);
 	    		var images = [];
 	    		Image.find({rightnow: val.rightnow}, function(err, imgs) {
 	    			imgs.forEach(function(img, j) {
 	    				images.push(img.imgurl);
 	    			});
 	    			
-	    			item.imgs = images;
-	    			console.log(item);
-	    			items.push(item);
+	    			items[j].imgs = images;
 	    		});
 	    	});
 
