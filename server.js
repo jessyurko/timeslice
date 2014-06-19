@@ -274,7 +274,7 @@ app.get('/api/keyword/:tag', function(req, res){
 	    				images.push(img.imgurl);
 	    			});
 	    			
-	    			items[j].imgs = images;
+	    			items[i].imgs = images;
 	    		});
 	    	});
 
