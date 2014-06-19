@@ -65,7 +65,8 @@ var RightNow = mongoose.model('RightNow', new mongoose.Schema({
 	date_created: String,
 	subject: String,
 	text: String,
-	parsed_date: Date
+	parsed_date: Date,
+	time: Boolean
 }));
 
 var Image = mongoose.model('Image', new mongoose.Schema({
@@ -138,7 +139,13 @@ app.delete('/api/items/:id', function(req, res){
 });
 
 
-
+app.get('/postmark', function(req, res){
+	var date = chrono.parse("july 25th 2pm");
+	var d = new Date(date[0].startDate);
+	console.dir(d);
+	console.dir(date[0].start.hour);
+	return res.send(chrono.parse("july 25th 2pm"));
+});
 
 app.post('/postmark', function(req, res){
   var item;
@@ -146,15 +153,20 @@ app.post('/postmark', function(req, res){
 
   var allText = req.body.Subject + " " + req.body.TextBody;
   var dates = chrono.parse(allText);
-  var date = "";
-  if(dates[0]) date = dates[0].startDate;
+  var date = null;
+  var time = false;
+  if(dates[0]) {
+  	date = new Date(dates[0].startDate);
+  	if(date[0].start.hours) time = true; 
+  }
   
   item = new RightNow({
     subject: req.body.Subject,
     date_created: new Date(),
     text: req.body.TextBody,
     from: req.body.From,
-    parsed_date: date
+    parsed_date: date,
+    time: time
     
   });
   
