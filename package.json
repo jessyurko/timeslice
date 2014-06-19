@@ -1,0 +1,18 @@
+{
+  "name": "timeslice",
+  "version": "0.0.1",
+  "dependencies": {
+    "express": "3.1.x",
+    "path": "0.4.x",
+    "hbs": "1.0.x",
+	"mongoose" : "3.5.x",
+	"imagemagick" : "0.1.x",
+	"gm" : "1.14.x",
+	"chrono-node" : "0.1.x"
+
+  },
+  "engines": {
+    "node": "latest",
+    "npm": "1.3.x"
+  }
+}
