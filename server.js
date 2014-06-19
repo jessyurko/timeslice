@@ -162,6 +162,16 @@ app.post('/postmark', function(req, res){
   	if(dates[0].start.hour) time = true; 
   }
   
+  var cleantags = [];
+
+  var tags = req.body.TextBody.match(/#\S+/g);
+  if(tags) {    		
+    tags.forEach(function(val, i) {
+      tags[i] = val.substr(1);
+	  
+	});
+  }
+  
   item = new RightNow({
     subject: req.body.Subject,
     date_created: new Date(),
@@ -169,6 +179,7 @@ app.post('/postmark', function(req, res){
     from: req.body.From,
     parsed_date: date,
     time: time,
+    tags: tags
     
   });
   
@@ -213,25 +224,13 @@ app.post('/postmark', function(req, res){
  			
     	});
     	
-    	var tags = req.body.TextBody.match(/#\S+/g);
-    	if(tags) {
-    		item.tags = [];
-    		
-    		tags.forEach(function(val, i) {
-				var txt = val.substr(1);
-				var tag = new Tag({
-					rightnow: item._id,
-					text: txt
-				});
-				
-				item.tags.push(txt);
+    	
 			
-				tag.save();
-			});
+			item.save();
 		}
     	
       return console.log("created");
-    }
+    
   });
   return res.send(item);
 });
