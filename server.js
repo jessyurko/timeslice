@@ -220,7 +220,7 @@ app.post('/postmark', function(req, res){
 					text: txt
 				});
 			
-				tage.save();
+				tag.save();
 			});
 		}
     	
