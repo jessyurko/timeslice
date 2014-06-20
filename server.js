@@ -13,7 +13,7 @@ var application_root = __dirname,
 
 
 var AWS = require('aws-sdk');
-AWS.config.loadFromPath('./config.json');
+//AWS.config.loadFromPath('./config.json');
 
 var express = require('express'),
   http = require('http'),
