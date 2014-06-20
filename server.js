@@ -173,65 +173,56 @@ app.post('/postmark', function(req, res){
   }
   
   item = new RightNow({
-    subject: req.body.Subject,
-    date_created: new Date(),
-    text: req.body.TextBody,
-    from: req.body.From,
-    parsed_date: date,
-    time: time,
-    tags: tags
-    
+	subject: req.body.Subject,
+	date_created: new Date(),
+	text: req.body.TextBody,
+	from: req.body.From,
+	parsed_date: date,
+	time: time,
+	tags: tags
+
   });
   
-  console.dir(item);
-  console.dir(req.body.Attachments.length);
-  item.save(function(err) {
-    if (!err) {
-    	req.body.Attachments.forEach(function(val, index) {
+	console.dir(item);
+	console.dir(req.body.Attachments.length);
 
-			var buffer = new Buffer(val.Content, "base64");
-			var rand = Math.random().toString(36).substring(3);
-			var folder = rand + val.Name;
-			var key = "small_" + rand + val.Name;
-			var type = val.ContentType;
-			
-			
-			
-			gm(buffer, folder).autoOrient().resize(800).toBuffer(function (err1, buffer1) {
-			  if (err1) console.dir(err1);	
-			  var opts = {Bucket: 'timeslice', Key: folder, Body: buffer1, ACL: "public-read"};
-				s3.putObject(opts, function (a, b) {
-					console.dir(a);
-					console.dir(b);
-				});		  		  
-			});
-			
-			gm(buffer, folder).autoOrient().resize(400).toBuffer(function (err2, buffer2) {
-			  if (err2) console.dir(err2);		  
-			  var opts2 = {Bucket: 'timeslice', Key: key, Body: buffer2, ACL: "public-read"};
-				s3.putObject(opts2, function (a, b) {
-					console.dir(a);
-					console.dir(b);
-				});		  		  
-			});
+	req.body.Attachments.forEach(function(val, index) {
 
-			var img = new Image({
-				rightnow: item._id,
-				imgurl: folder
-			});
+		var buffer = new Buffer(val.Content, "base64");
+		var rand = Math.random().toString(36).substring(3);
+		var folder = rand + val.Name;
+		var key = "small_" + rand + val.Name;
+		var type = val.ContentType;
+	
+	
+	
+		gm(buffer, folder).autoOrient().resize(800).toBuffer(function (err1, buffer1) {
+		  if (err1) console.dir(err1);	
+		  var opts = {Bucket: 'timeslice', Key: folder, Body: buffer1, ACL: "public-read"};
+			s3.putObject(opts, function (a, b) {
+				console.dir(a);
+				console.dir(b);
+			});		  		  
+		});
+	
+		gm(buffer, folder).autoOrient().resize(400).toBuffer(function (err2, buffer2) {
+		  if (err2) console.dir(err2);		  
+		  var opts2 = {Bucket: 'timeslice', Key: key, Body: buffer2, ACL: "public-read"};
+			s3.putObject(opts2, function (a, b) {
+				console.dir(a);
+				console.dir(b);
+			});		  		  
+		});
+
+		item.images.push(folder);
+	
+	});
+    	
+    	
+			
+	item.save();
 		
-			img.save();
- 			
-    	});
-    	
-    	
-			
-			item.save();
-		}
-    	
-      return console.log("created");
-    
-  });
+    	    
   return res.send(item);
 });
 
