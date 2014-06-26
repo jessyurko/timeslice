@@ -251,7 +251,7 @@ var s3 = new AWS.S3();
 
 app.get('/api/keyword/:tag', function(req, res){
   var items = [];
-  return RightNow.find({tags: [req.params.tag]}, function(err, tags) {
+  return RightNow.find({tags: req.params.tag}, function(err, tags) {
   	if(tags) {
 		
 		return res.send(tags);
