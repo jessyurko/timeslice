@@ -102,6 +102,13 @@ app.get('/api/items/:id', function(req, res){
   });
 });
 
+app.get('/api/items/search', function(req, res){
+  console.dir(req.query);
+  return RightNow.find(function(err, events) {
+    return res.send(events);
+  });
+});
+
 app.put('/api/items/:id', function(req, res){
   return RightNow.findById(req.params.id, function(err, event) {
     event.subject = req.body.subject;
@@ -250,7 +257,6 @@ var s3 = new AWS.S3();
 });
 
 app.get('/api/keyword/:tag', function(req, res){
-  var items = [];
   return RightNow.find({tags: req.params.tag}, function(err, tags) {
   	if(tags) {
 		
@@ -260,6 +266,15 @@ app.get('/api/keyword/:tag', function(req, res){
   });
 });
 
+app.get('/api/items/q:tag', function(req, res){
+  return RightNow.find({tags: req.params.tag}, function(err, tags) {
+  	if(tags) {
+		
+		return res.send(tags);
+
+	} else return res.send('none found');
+  });
+});
 
 
 
