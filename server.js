@@ -71,15 +71,6 @@ var RightNow = mongoose.model('RightNow', new mongoose.Schema({
 	images: Array
 }));
 
-var Image = mongoose.model('Image', new mongoose.Schema({
-	rightnow: String,	
-	imgurl: String,
-}));
-
-var Tag= mongoose.model('Tag', new mongoose.Schema({
-	rightnow: String,	
-	text: String,
-}));
 
 app.configure(function(){
   app.use(express.bodyParser());
@@ -113,10 +104,11 @@ app.get('/api/items/:id', function(req, res){
 
 app.put('/api/items/:id', function(req, res){
   return RightNow.findById(req.params.id, function(err, event) {
-    event.title = req.body.title;
-    event.date = req.body.date;
+    event.subject = req.body.subject;
+    event.parsed_date = req.body.date;
     event.time = req.body.time;
     event.imgurl = req.body.imgurl;
+    event.text = req.body.text;
 
     return event.save(function(err) {
       if (!err) {
@@ -259,32 +251,15 @@ var s3 = new AWS.S3();
 
 app.get('/api/keyword/:tag', function(req, res){
   var items = [];
-  return Tag.find({text: req.params.tag}, function(err, tags) {
+  return RightNow.find({tags: {$elemMatch: req.params.tag}}, function(err, tags) {
   	if(tags) {
-		tags.forEach(function(val, i) {
-	    	RightNow.findById(val.rightnow, function(err, item) {
-	    		var obj = item;
-	    		items.push(obj);	    		
-	    	});
-		});
 		
-		return res.send(items);
+		return res.send(tags);
 
 	} else return res.send('none found');
   });
 });
 
-app.get('/api/imgs', function(req, res){
-  return Image.find(function(err, items) {
-    return res.send(items);
-  });
-});
-
-app.get('/api/tags', function(req, res){
-  return Tag.find(function(err, items) {
-    return res.send(items);
-  });
-});
 
 
 
