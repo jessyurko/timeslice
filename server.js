@@ -102,7 +102,7 @@ app.get('/api/items/:id', function(req, res){
   });
 });
 
-app.get('/api/items/search/', function(req, res){
+app.get('/api/search', function(req, res){
   console.dir(req.query);
   return RightNow.find(function(err, events) {
     return res.send(events);
