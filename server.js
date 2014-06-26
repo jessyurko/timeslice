@@ -105,6 +105,7 @@ app.get('/api/items/:id', function(req, res){
 app.get('/api/search', function(req, res){
   if(req.query.date) {
 	  var date = new Date(req.query.date);
+	  console.dir(date);
 	  return RightNow.find({parsed_date: date}, function(err, events) {
 		return res.send(events);
 	  });
