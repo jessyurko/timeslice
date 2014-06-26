@@ -103,10 +103,12 @@ app.get('/api/items/:id', function(req, res){
 });
 
 app.get('/api/search', function(req, res){
-  console.dir(req.query);
-  return RightNow.find(function(err, events) {
-    return res.send(events);
-  });
+  if(req.query.date) {
+	  var date = new Date(req.query.date);
+	  return RightNow.find({parsed_date: date}, function(err, events) {
+		return res.send(events);
+	  });
+	} else return res.send("");
 });
 
 app.put('/api/items/:id', function(req, res){
