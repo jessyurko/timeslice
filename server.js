@@ -220,8 +220,7 @@ app.post('/postmark', function(req, res){
 	
 	});
     	
-    	
-			
+		
 	item.save();
 		
     	    
@@ -245,11 +244,8 @@ var s3 = new AWS.S3();
 					console.dir(e);
 					console.dir(d);
 
-				});	  
-			  
-		});
-		
-		
+				});	    
+			});	
 		});
 
 		}	
