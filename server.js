@@ -67,7 +67,7 @@ var RightNow = mongoose.model('RightNow', new mongoose.Schema({
 	subject: String,
 	text: String,
 	parsed_date: Date,
-	day: Date,
+	date: Date,
 	hour: Number,
 	minute: Number,
 	time: Boolean,
