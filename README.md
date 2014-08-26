@@ -6,7 +6,7 @@ a tool for creating digital bulletin boards. specific use-cases might include:
 - showing a realtime feed of events from multiple contributors
 - a community-curated event repository
 
-setting up your own instance of timeslice requires an amazon web services (AWS) account to save photos that get emailed. you'll need to save your AWS access key id and AWS secret access key to a config file that your server can access.
+setting up your own instance of timeslice requires an amazon web services (aws) account to save photos that get emailed. you'll need to save your aws access key id and aws secret access key to a config file that your server can access.
 
 you'll also need a postmark account, which will act as an intermediary between users and your server. once you set up a new postmark account and a server, postmark will give you an inbound email address for users to send to (e.g. 12345asbd7593261bdgf@inbound.postmarkapp.com). this email address will be very ungainly; you can create a dedicated email account (e.g. timeslice@mylibrary.org) and set it to auto-forward everything it receives to the ungainly postmark address, so that users only have to type in something simple. you can then set up an inbound hook for postmark that directs it to your server. this address will be something like http://YOUR_DOMAIN.org/api/postmark. the "/api/postmark" part is set in server.js.
 

@@ -60,16 +60,21 @@ mongoose.connect(uristring, function (err, res) {
 });
 
 
+
 var RightNow = mongoose.model('RightNow', new mongoose.Schema({
 	from: String,
 	date_created: String,
 	subject: String,
 	text: String,
 	parsed_date: Date,
+	day: Date,
+	hour: Number,
+	minute: Number,
 	time: Boolean,
 	tags: Array,
 	images: Array
 }));
+
 
 
 app.configure(function(){
@@ -105,7 +110,7 @@ app.get('/api/search', function(req, res){
 	  var date = new Date(req.query.date);
 	  console.dir(date);
 	  return RightNow.find({parsed_date: date}, function(err, events) {
-		return res.send(events);
+			return res.send(events);
 	  });
 	} else return res.send("");
 });
@@ -157,9 +162,15 @@ app.post('/postmark', function(req, res){
   var dates = chrono.parse(allText);
   var date = null;
   var time = false;
+  var hour, minute, day = -1;
   if(dates[0]) {
   	date = new Date(dates[0].startDate);
-  	if(dates[0].start.hour) time = true; 
+		day = new Date(dates[0].start.year, dates[0].start.month, dates[0].start.day);
+  	if(dates[0].start.hour) {
+  		time = true; 
+  		hour = dates[0].start.hour;
+  		minute = dates[0].start.minute;
+  	}
   }
   
   var cleantags = [];
@@ -167,6 +178,8 @@ app.post('/postmark', function(req, res){
   var tags = req.body.TextBody.match(/#\S+/g);
   if(tags) {    		
     tags.forEach(function(val, i) {
+    	var n = val.length -1;
+    	if(val[n] == "." || val[n] == ",") val = val.substr(0, n); 
       tags[i] = val.substr(1);
 	  
 		});
@@ -179,7 +192,10 @@ app.post('/postmark', function(req, res){
 		from: req.body.From,
 		parsed_date: date,
 		time: time,
-		tags: tags
+		tags: tags,
+		date: day,
+		hour: hour,
+		minute: minute
 
   });
   
@@ -223,39 +239,13 @@ app.post('/postmark', function(req, res){
   return res.send(item);
 });
 
-app.get('/api/rotate', function(req, res) {
-var s3 = new AWS.S3();
-	s3.listObjects({Bucket: 'timeslice'}, function(err, data) {
-		  if(data) {
-	  
-		data.Contents.forEach(function(val, index) {
-			console.dir(val);
-			gm("https://s3.amazonaws.com/timeslice/"+val.Key).autoOrient().resize(400).toBuffer(function (err, buffer) {
-			  if (err) console.dir(err);
-			  console.log('done!');
-			  
-			  var key = "small_"+val.Key;
-			  var opts = {Bucket: 'timeslice', Key: key, Body: buffer, ACL: "public-read"};
-				s3.putObject(opts, function (e, d) {
-					console.dir(e);
-					console.dir(d);
 
-				});	    
-			});	
-		});
-
-		}	
-
-	  return res.send(data);
-  });
-
-});
 
 app.get('/api/keyword/:tag', function(req, res){
   return RightNow.find({tags: req.params.tag}, function(err, tags) {
   	if(tags) {
 		
-		return res.send(tags);
+			return res.send(tags);
 
 	} else return res.send('none found');
   });
@@ -265,7 +255,7 @@ app.get('/api/items/q:tag', function(req, res){
   return RightNow.find({tags: req.params.tag}, function(err, tags) {
   	if(tags) {
 		
-		return res.send(tags);
+			return res.send(tags);
 
 	} else return res.send('none found');
   });
