@@ -160,12 +160,12 @@ app.post('/postmark', function(req, res){
 
   var allText = req.body.Subject + " " + req.body.TextBody;
   var dates = chrono.parse(allText);
-  var date = null;
+  var parsed_date = null;
   var time = false;
-  var hour, minute, day = -1;
+  var hour, minute, date = -1;
   if(dates[0]) {
-  	date = new Date(dates[0].startDate);
-		day = new Date(dates[0].start.year, dates[0].start.month, dates[0].start.day);
+  	parsed_date = new Date(dates[0].startDate);
+		date = new Date(dates[0].start.year, dates[0].start.month, dates[0].start.day);
   	if(dates[0].start.hour) {
   		time = true; 
   		hour = dates[0].start.hour;
@@ -190,10 +190,10 @@ app.post('/postmark', function(req, res){
 		date_created: new Date(),
 		text: req.body.TextBody,
 		from: req.body.From,
-		parsed_date: date,
+		parsed_date: parsed_date,
 		time: time,
 		tags: tags,
-		date: day,
+		date: date,
 		hour: hour,
 		minute: minute
 
