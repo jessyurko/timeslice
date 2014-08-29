@@ -119,7 +119,7 @@ app.get('/api/search', function(req, res){
 	datequery["$gte"] = start;
 	datequery["$lte"] = end;
 	query["date"]  = datequery;
-	if(req.query.tag) query["tags"] = req.query.tags;
+	if(req.query.tag) query["tags"] = req.query.tag;
 	if(req.query.q) {
 		var textquery = {};
 		textquery["$search"] = req.query.q;
