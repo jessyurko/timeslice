@@ -75,6 +75,10 @@ var RightNow = mongoose.model('RightNow', new mongoose.Schema({
 	images: Array
 }));
 
+RightNow.collection.ensureIndex( { text: "text" }, function(error, res) {
+	if(error) console.log("failed ensureIndex", error);
+	else console.log("ensureIndex succeeded", res);
+} );
 
 
 app.configure(function(){
@@ -106,13 +110,25 @@ app.get('/api/items/:id', function(req, res){
 });
 
 app.get('/api/search', function(req, res){
-  if(req.query.date) {
-	  var date = new Date(req.query.date);
-	  console.dir(date);
-	  return RightNow.find({parsed_date: date}, function(err, events) {
-			return res.send(events);
-	  });
-	} else return res.send("");
+	var start = new Date(100, 01, 01);
+	var end = new Date(2100, 12, 31);
+	if(req.query.after) start = new Date(req.query.after);
+	if(req.query.before) end = new Date(req.query.before);	
+	var query = {};
+	var datequery = {};
+	datequery["$gte"] = start;
+	datequery["$lte"] = end;
+	query["date"]  = datequery;
+	if(req.query.tag) query["tags"] = req.query.tags;
+	if(req.query.q) {
+		var textquery = {};
+		textquery["$search"] = req.query.q;
+		query["$text"] = textquery;
+	}
+	console.dir(query);
+	return RightNow.find(query, function(err, events) {
+		return res.send(events);
+	});
 });
 
 app.put('/api/items/:id', function(req, res){
@@ -199,7 +215,7 @@ app.post('/postmark', function(req, res){
 
   });
   
-
+	if(req.body.Attachments) {
 	req.body.Attachments.forEach(function(val, index) {
 
 		var buffer = new Buffer(val.Content, "base64");
@@ -230,8 +246,8 @@ app.post('/postmark', function(req, res){
 
 		item.images.push(folder);
 	
-	});
-    	
+		});
+	}	
 		
 	item.save();
 		
