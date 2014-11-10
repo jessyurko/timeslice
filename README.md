@@ -23,10 +23,11 @@ sample workflow
 querying submissions
 ======
 user submissions can be queried via http://YOUR_DOMAIN.org/api/search?
+
 current parameters include:
-before
-after
-tag
+before (mm/dd/yyyy),
+after (mm/dd/yyyy),
+tag (string).
 
 templates
 ====
