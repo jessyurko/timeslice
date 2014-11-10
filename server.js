@@ -75,10 +75,10 @@ var RightNow = mongoose.model('RightNow', new mongoose.Schema({
 	images: Array
 }));
 
-RightNow.collection.ensureIndex( { text: "text" }, function(error, res) {
+/*RightNow.collection.ensureIndex( { text: "text" }, function(error, res) {
 	if(error) console.log("failed ensureIndex", error);
 	else console.log("ensureIndex succeeded", res);
-} );
+} );*/
 
 
 app.configure(function(){

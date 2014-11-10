@@ -1,122 +1,246 @@
-<!--[if lt IE 8]><html class="no-js ie6 oldie" lang="en"> 
-<![endif]--><!--[if IE 7]><html class="no-js ie7 oldie" lang="en">
-<![endif]--><!--[if IE 8]><html class="no-js ie8 oldie" lang="en">
-<![endif]--><!--[if gt IE 8]><!-->
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>timeslice</title>
 
-<html class="no-js" lang="en" xmlns="http://www.w3.org/1999/xhtml">
-<!--
-<![endif]-->
-
-<head>
-
-  <meta charset="utf-8" />
-  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
-
-  <title>Time/Slice</title>
-  <meta name="description" content="" />
-  <meta name="author" content="" />
-
-  <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <link rel="stylesheet" href="css/style.css" type="text/css" />
-    <link rel="stylesheet" href="css/jquery-ui-1.10.3.custom.min.css" type="text/css" /><!-- end CSS-->
-    <link rel="stylesheet" href="css/jquery-ui-1.10.3.custom.min.css" type="text/css" /><!-- end CSS-->
-    <link rel="stylesheet" href="css/bootstrap.min.css" type="text/css" /><!-- end CSS-->
-
-  
-  <!-- end CSS-->
-	<script type="text/javascript" src="http://code.jquery.com/jquery-1.10.2.min.js"></script>
- <script type="text/javascript" src="js/libs/imagesloaded.pkgd.min.js"></script>
-
-    <script src="js/mylibs/underscore.js" type="text/javascript"></script>
-  <script src="js/libs/modernizr-2.0.6.min.js" type="text/javascript"></script>
-
-<script type="text/javascript" src="js/libs/handlebars.js"></script>
-<script src="js/mylibs/backbone-min.js" type="text/javascript"></script>
-<script src="http://code.jquery.com/ui/1.10.3/jquery-ui.js"></script>
-
-
-<script src="js/libs/detectmobilebrowser.js" type="text/javascript"></script>
-
-<script src="js/libs/datejs/en-US.js" type="text/javascript"></script>
-<script src="js/libs/datejs/core.js" type="text/javascript"></script>
-<script src="js/libs/datejs/parser.js" type="text/javascript"></script>
-<script src="js/libs/datejs/sugarpak.js" type="text/javascript"></script>
-<script src="js/libs/datejs/time.js" type="text/javascript"></script>
-<script src="js/libs/datejs/extras.js" type="text/javascript"></script>
-<script src="js/libs/isotope.pkgd.min.js"></script>
-
-
-<script src="js/models/event.js" type="text/javascript"></script>
-<script src="js/collections/eventlist.js" type="text/javascript"></script>
-<script src="js/views/submitview.js" type="text/javascript"></script>
-<script src="js/views/eventview.js" type="text/javascript"></script>
-<script src="js/views/calendarview.js" type="text/javascript"></script>
-<script src="js/views/itemview.js" type="text/javascript"></script>
-<script src="js/views/editview.js" type="text/javascript"></script>
-
-<script src="js/app.js" type="text/javascript"></script>
-
-
-</head>
-
-<body>
-  <div id="container">
-    <div id="main" role="main">
+    <!-- Bootstrap -->
+    <link href="../css/bootstrap.min.css" rel="stylesheet">
+	<link href='http://fonts.googleapis.com/css?family=Roboto:400,300,500,700,900' rel='stylesheet' type='text/css'>
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+      <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+      <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
     
-    	<div id="tsapp">
+    <style>
+			html {
+				overflow: hidden;
+			}
+			
+			body {
+				font-family: 'Roboto', sans-serif;
+				overflow: hidden;
+			}
+			
+			#header {
+				top: 0px;
+			}
+			
+			#footer {
+				bottom: 10px;
+			}
+			
+			
+			
+    	.text {
+				position: absolute;
+				left: 0;
+				z-index: 1000;
+				color: white;
+				width: 100%;
+				text-align: center;
+    	}
     	
-    		<h1>
-    			<span class="title-text title-big">LTK Open House</span>
-    			<br />
-    			<span class="title-text title-small">Time / Slice</span>
-    		</h1>
-    		<br />
-    		<div class="content" id="grid">
-    		
-    		<!--
-    			<div class="text-block">
-    			<div class="intro">
-    			<b>Time / Slice</b> is a crowd-sourced digital bulletin board.<br />
-				It's a <a href="http://osc.hul.harvard.edu/liblab/current">Library Lab</a> project that got started in the <a href="http://www.librarytestkitchen.org">Library Test Kitchen</a>. <br /> <br />
-    			It's a platform for collecting, sharing, and preserving the physical ephemera that are part of the social life of a community. <a href="./#view"><b>Check out a demo</b></a>.
-    			
-				</div>
+    	.text a, #how a {
+    		text-decoration: underline;
+    		color: white;
+    	}
+    	
+    	.text a:hover {
+    		color: white;
+    		background-color: #fe57a1;
+    	}
+    	
+    	.text .title {
+    		font-size: 56px;
+    		font-weight: 400;
+    	}
+    	
+    	.text .sub {
+    		font-size: 20px;
+    		font-weight: 100;
+    	}
+    	
+    	.content {
+    		margin-left: auto;
+    		margin-right: auto;
+    		width: 100%;
+    		height: 100%;
+    	}
+    	
+    	.item {
+    		padding: 10px;
+    		width: 250px;
+    	}
+    	
+    	.item img {
+    		width: 100%;
+    	}
+  			
+  			#how { 
+  				width: 150px; 
+  				background-color: #09f;
+  				color: white;
+  			}
+  			
+  			#what {
+					width: 250px;
+					background-color: #fe57a1;
+					color: white;
+  			}
+   
+			.drag {
+				position: absolute;
+				z-index: 1000;
+				cursor: move;
+				background-color: white;
+				padding: 0 10px 10px 10px;
+
+			}
+    </style>
+    
+    
+	
+  </head>
+  <body>
+  	<div class="text" id="header">
+  	  		<span class="title">Time/Slice<br /></span>
+  	  		<span class="sub">a crowd-sourced digital bulletin board</span>
+  	</div>
+  	
+  	<div id="how" class="ui-widget-content drag">
+  		<p>more on it's way! contact: <a href="mailto:jessica@metalab.harvard.edu">jessica [at] metalab.harvard.edu</a>
+  		</p>
+		</div>
+
+  	<div id="what" class="ui-widget-content drag">
+  		<p><b>What is it?</b><br />
+				Time/Slice turns the traditional and ephemeral community bulletin board into a digital resource with photos of events and activities, submitted to the application using mobile phones. It provides a slick and simple platform to display a collaboratively-submitted, media-focused digital calendar, ultimately serving as an archive of the information.  
+  		</p>
+		</div>
+		
+
+  	<div id="where" class="ui-widget-content drag">
+  		<p><b>Check it out at</b><br />
+  			<a href="http://www.labrary.bike">labrary.bike</a><br />
+   			<a href="http://timeslice.herokuapp.com">Library Test Kitchen 2013 open house</a>
+ 			
+  		</p>
+		</div>
 				
-				<img src="http://timeslice.io/images/howto.png">
-				    			<div class="intro">
-    			<b>Want to use it?</b> Send <a href="http://www.jessyurko.com">me</a> an <a href="mailto:jessica@metalab.harvard.edu">email</a>.
-				</div>
+  	<div class="text" id="footer">
+  		<span class="sub">Time/Slice is generously supported by the <a href="https://osc.hul.harvard.edu/liblab">Harvard Library Lab</a> and the <a href="http://www.arcadiafund.org.uk/about-arcadia/about-arcadia.aspx">Arcadia Fund</a>. It originally came out of the <a href="http://www.librarytestkitchen.org">Library Test Kitchen</a>.</span>
+
+  	</div>
+  	<div id="content">
+  	<canvas id="c" class="content">
+		</canvas>
+		</div>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
+  	<script src="//code.jquery.com/ui/1.11.2/jquery-ui.js"></script>
+
+		<script type="text/javascript" src="./js/fabric.min.js"></script>
+		<script type="text/javascript" src="./js/textbox.js"></script>
+
+    <script src="./js/handlebars-v1.3.0.js"></script>
+    
+    
+
+    
+    
+
+
+
+	</script>
+	
+    <script>
+    
+		var timeslice;
+		var canvas;
+		var items = [];
+		$(document).ready(function() {
+
+			$( ".drag" ).draggable();
+			$("#how").css("top", Math.random()*(500)+200);
+			$("#how").css("left", Math.random()*(window.innerHeight-150));
+			$("#what").css("top", Math.random()*(500)+200);
+			$("#what").css("left", Math.random()*(window.innerHeight-150));				
+			$("#where").css("top", Math.random()*(500)+200);
+			$("#where").css("left", Math.random()*(window.innerHeight-150));			
+			canvas = new fabric.Canvas("c");
+			canvas.setHeight(window.innerHeight);
+			canvas.setWidth(window.innerWidth);
+			canvas.setBackgroundImage("cork.jpg", canvas.renderAll.bind(canvas));
+  
+			canvas.selected = false;
+			
+			$(document).on('dblclick', function(e) {
+				if(canvas.selected) {
+					canvas.selected = false;
+					canvas.text.setOpacity(0);
+				} else {
+					canvas.selected = true;
+					var active = canvas.getActiveObject();
+					canvas.text.setOpacity(1);
+					canvas.text.setLeft(active.getLeft());
+					canvas.text.setTop(active.getTop());
+					canvas.text.bringToFront();
+					canvas.text.setText(active.text);
+				}
+				canvas.renderAll();
+			});
+	
+		
+			
+			$.getJSON("http://timeslicedev.herokuapp.com/api/search?tag=ts", function(m) {
+				var data = {};
+				data.items = m;   
+				var wcount = 10;
+				$.each(data.items, function(i, val) {
+					if(val.images) {
+						var obj = new fabric.Image.fromURL("https://s3.amazonaws.com/timeslice/small_"+val.images[0], function(img) {
+							var rand = (40+Math.floor(Math.random()*60)) / 100;
+							img.scale(rand);
+							var w = img.getWidth();
+							var h = img.getHeight()+200;
+							var x = Math.floor(Math.random()*(window.innerWidth-w));
+							var y = Math.floor(Math.random()*(window.innerHeight-h))+200;
+							img.setLeft(x);
+							img.setTop(y);
+							img.text = val.text;
+							canvas.add(img);
+							items.push(img);
+							
+							
+							img.on("selected", function() {
+								this.bringToFront();
+							});
+							
+							
+						
+							img.set({
+								borderColor: 'white',
+								cornerColor: 'white'
+							});
+						
+						});		
+					}		
+
+				}); 
 				
-				</div> -->
-    		</div>
-    	</div>
-    </div>
-    </div>
+				canvas.renderAll();
+			
 
+			});
+		});
+		
+    	
+    
+    </script>
 
-
-
- 
-
-
-<script>
-
-
-</script>
-<script defer="defer" src="js/plugins.js" type="text/javascript"></script>
-
-
-<script type=
-"text/javascript">
-//<![CDATA[
-  window._gaq = [['_setAccount','UAXXXXXXXX1'],['_trackPageview'],['_trackPageLoadTime']];
-  Modernizr.load({load: ('https:' == location.protocol ? '//ssl' : '//www') + '.google-analytics.com/ga.js'});
-
-  //]]>
-  </script>
-
-  <!--[if lt IE 7]><script src="//ajax.googleapis.com/ajax/libs/chrome-frame/1.0.3/CFInstall.min.js"></script><script>window.attachEvent('onload',function(){CFInstall.check({mode:'overlay'})})
-</script><![endif]-->
-
-</body>
+  </body>
 </html>
