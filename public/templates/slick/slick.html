@@ -78,7 +78,7 @@
     <script>
     
 		var timeslice;
-		$.getJSON("http://timeslicedev.herokuapp.com/api/search", function(m) {
+		$.getJSON("http://timeslice.herokuapp.com/api/search?tag=ts", function(m) {
 			var data = {};
 			data.items = m;
 			var source = $("#slick-template").html();
